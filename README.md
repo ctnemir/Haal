@@ -8,7 +8,7 @@
 <h3>Yazılım Yapımı Dersi Final Ödevi</h3>
 <hr>
 <h2>Videolar</h2>
-<a href="https://youtu.be/81m2n0L-Yu0">v1.0</a>
+<a href="https://youtu.be/81m2n0L-Yu0">v1.0</a><br>
 <a href="https://youtu.be/H2EBV3GvPoM">v1.1</a>
 <hr>
 
