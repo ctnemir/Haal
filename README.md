@@ -1,52 +1,52 @@
-<h1>HAAL - Veri Yapıları 20/21</h1>
+<h1>HAAL v1.1 - Yazılım Yapımı 20/21 Final</h1>
 <p align="center">
 <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400">
-![](logo.svg)
+<img src="logo.svg" width="100" heigth="100">
 </p>
 <h2>Emircan ÇETİN</h2>
 <p>Celal Bayar Üniversitesi Yazılım Mühendisliği</p>
-<h3>Yazılım Sınama Dersi Proje Ödevi</h3>
+<h3>Yazılım Yapımı Dersi Final Ödevi</h3>
+<hr>
+<h2>Videolar</h2>
+<a href="https://youtu.be/81m2n0L-Yu0">v1.0</a>
+<a href="https://youtu.be/H2EBV3GvPoM">v1.1</a>
+<hr>
 
 <h4>Kurulum</h4>
 <ol>
 <li>Öncelikle apache ve mysql server gereklidir.</li>
-<li>testCaser adında bir veritabanı oluşturun.</li>
+<li>haal adında bir veritabanı oluşturun.</li>
 <li>.env dosyasında veritabanı ayarlarınızı doğrulayın.</li>
-<li>Proje dosyalarını apache serverda testCaser adında bir klasöre kopyalayın.</li>
-<li>testCaser klasöründe comut istemi çalıştırın (composer kurulu olmalıdır.)</li>
+<li>Proje dosyalarını apache serverda haal adında bir klasöre kopyalayın.</li>
+<li>haal klasöründe comut istemi çalıştırın (composer kurulu olmalıdır.)</li>
 <li><code>php artisan migrate</code> komutunu çalıştırın</li>
-<li>Projenin ana yolu şudur: "localhost/testCaser/public". Ancak virtualhost oluşturarak kolaylık sağlayabilirsiniz.</li>
-</ol>
-<hr>
-
-<h4>Test</h4>
-<ol>
-<li>Whitebox testler <code>tests/browsers</code> klasörü içindedir</li>
-<li>Testleri koşturmak için <code>php artisan dusk</code> komutunu çalıştırın. Başarılı testler ".", hatalı testler "E" ve başarısız testler "F" ile belirtilmektedir.</li>
+<li>Projenin ana yolu şudur: "localhost/haal/public". Ancak virtualhost oluşturarak kolaylık sağlayabilirsiniz.</li>
 </ol>
 <hr>
 
 <h4>Kullanılan Teknoloji ve Paketler</h4>
 <ul>
 <li>Laravel v.8</li>
-<li>Laravel Ui</li>
 <li>Jetstream</li>
+<li>miten5/larawind</li>
 <li>Liveware</li>
 <li>Fortify</li>
 <li>Blade</li>
-<li>Bootstrap</li>
+<li>TailwindCss</li>
 <li>Jquery</li>
-<li>Lbc</li>
+<li>Excell</li>
+<li>AlertifyJs</li>
 <li>Carbon</li>
 </ul>
 <hr>
 <h4>Veritabanı Diagramı</h4>
-<img src="databaseDiagram.png">
+<img src="haalDiagram.png">
 <hr>
 <h4>Ekran Görüntüleri</h4>
-<img src="screenShots/dashboard.png">
-<img src="screenShots/addTask.png">
-<img src="screenShots/showTask.png">
+<img src="ss/Screenshot 2021-06-21 152547.png">
+<img src="ss/Screenshot 2021-06-21 152701.png">
+<img src="ss/Screenshot 2021-06-21 152634.png">
+<img src="ss/Screenshot 2021-06-21 152727.png">
 
 ## License
 
