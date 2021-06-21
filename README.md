@@ -18,7 +18,7 @@
 <li>haal adında bir veritabanı oluşturun.</li>
 <li>.env dosyasında veritabanı ayarlarınızı doğrulayın.</li>
 <li>Proje dosyalarını apache serverda haal adında bir klasöre kopyalayın.</li>
-<li>haal klasöründe comut istemi çalıştırın (composer kurulu olmalıdır.)</li>
+<li>haal klasöründe komut istemcisini çalıştırın (composer kurulu olmalıdır.)</li>
 <li><code>php artisan migrate</code> komutunu çalıştırın</li>
 <li>Projenin ana yolu şudur: "localhost/haal/public". Ancak virtualhost oluşturarak kolaylık sağlayabilirsiniz.</li>
 </ol>
