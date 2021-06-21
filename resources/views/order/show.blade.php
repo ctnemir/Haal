@@ -1,30 +1,36 @@
-<x-app-layout title="Item Requests">
-    <div class="container grid px-6 mx-auto">
-
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Items
+<x-app-layout title="All Orders">
+    <div class="mb-5 p-8 flex content-center text-gray-900 dark:text-white  flex-row w-full bg-indigo-400 dark:bg-indigo-800">
+        <div class="mb-5 p-8 flex content-center text-gray-900 dark:text-white  flex-row w-full bg-indigo-400 dark:bg-indigo-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-3 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <h2 class="text-2xl font-semibold inline-block">
+                All Orders
             </h2>
-
-    <!-- Cards -->
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        </div>
+    </div>
+    <div class="container grid px-6 mx-auto">
+        <!-- Cards -->
+        <div class="hidden grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
             <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
+                        </path>
                     </svg>
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Total Kind
+                        Total Requests
                     </p>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        {{\App\Models\Kind::all()->count()}}
+                        {{\App\Models\User::all()->count()}}
                     </p>
                 </div>
             </div>
             <!-- Card -->
-            {{--<div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
@@ -72,102 +78,310 @@
                     </p>
                 </div>
             </div>
-            --}}
         </div>
 
-        <!-- Items -->
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="grid gap-6 mb-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
-                    @foreach($data as $kind)
-                    <div class="flex shadow flex-col items-start bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                        <div class="item flex-none w-full">
-                            <img class="object-cover w-full" src="https://ui-avatars.com/api/?name={{urlencode($kind->name)}}&color=7F9CF5&background=EBF4FF" alt="">
-                        </div>
-                        <div class="pl-3 item">
-                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{$kind->name}}
-                            </p>
-                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{$kind->bestPrice()}}
-                                <span class="font-light text-xs">(Min Price)</span>
-                            </p>
-                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{$kind->avaibleQuantity()}}
-                                <span class="font-light text-xs">(Avaible Quantity)</span>
-                            </p>
-                        </div>
-                        <div data-id="{{$kind->id}}" class="priceCalc hidden p-4 w-full flex-col items-start bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <label id="new_kind_label" class="mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Quantity</span>
-                                <div class="flex flex-row">
-                                    <input type="number" step="0.01"
-                                           class="block p-0 priceCalcInput w-9/12 m-1 text-sm dark:border-gray-600 dark:bg-gray-700
-                                    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
-                                    dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name="quantity" autofocus/>
+        <!-- Raporalma -->
 
-                                    <button class="orderCreate px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <span class="calcResult mt-1 text-gray-700 dark:text-gray-500"></span>
+        <div class="w-full bg-white dark:bg-gray-800 mb-5 py-6 px-4 rounded shadow-xs">
+            <h2 class=" mb-5 text-gray-700 dark:text-gray-400 text-xl font-bold">Xlsx Report</h2>
+            <form action="{{route('export')}}">
+                @csrf
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Start (Optional)</span>
+                    <input class="block w-64 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="datetime-local"
+                        name="start">
+                </label>
 
-                            </label>
-                        </div>
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">End (Optional)</span>
+                    <input class="block w-64 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                           type="datetime-local"
+                           name="end">
+                </label>
+
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">Item (Optional)</span>
+                    <select class="block w-64 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            name="kind">
+                        <option value="">Select</option>
+                        @foreach(\App\Models\Kind::all() as $kind)
+                            <option value="{{$kind->id}}">{{$kind->name}}</option>
+                        @endforeach
+                    </select>
+                </label>
+
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">Type (Optional)</span>
+                    <select class="block w-64 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            name="type">
+                        <option value="">Select</option>
+                        <option value="selling">Selling</option>
+                        <option value="buying">Buying</option>
+                    </select>
+                </label>
+
+                <button class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors
+                duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600
+                hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                type="submit">
+                    Export
+                </button>
+
+                @if ($errors->any())
+                    <div class="w-full p-4">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li class="my-3 p-2 text-gray-800 dark:text-gray-50 bg-red-200 dark:bg-red-900">{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
+            </form>
 
+        </div>
+
+        <!-- New Table -->
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <h2 class="ml-3 text-gray-700 dark:text-gray-400 text-xl font-bold">Buying</h2>
+            <div class="w-full overflow-x-auto">
+                <table id="orderShowTable1" class="w-full whitespace-no-wrap">
+                    <thead>
+                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        {{--                        <th class="px-4 py-3">User</th>--}}
+                        <th class="px-4 py-3">Item</th>
+                        <th class="px-4 py-3">Quantity</th>
+                        <th class="px-4 py-3">Price</th>
+                        <th class="px-4 py-3">Seller</th>
+{{--                        <th class="px-4 py-3">Buyer</th>--}}
+                        <th class="px-4 py-3">Date</th>
+{{--                        <th class="px-4 py-3">Actions</th>--}}
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    @foreach($buying as $order)
+                        <tr class="text-gray-700 dark:text-gray-100 bg-orange-50 dark:bg-orange-900">
+                            <td class="px-4 py-3 ">
+                                <div class="flex items-center text-sm">
+                                    <!-- Avatar with inset shadow -->
+                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                        <img class="object-cover w-full h-full rounded-full" src="https://ui-avatars.com/api/?name={{urlencode($order->kind->name)}}&color=7F9CF5&background=EBF4FF" alt="" loading="lazy" />
+                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">{{$order->kind->name}}</p>
+                                        {{--                                        <p class="text-xs text-gray-600 dark:text-gray-400">--}}
+                                        {{--                                            {{$confirmItem->user->phone_number}}--}}
+                                        {{--                                        </p>--}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{$order->quantity}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                ₺ {{$order->price}}
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+
+                                    {{$order->getSeller->name}}
+
+                            </td>
+                            {{--@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')--}}
+                            <td class="px-4 py-3 text-xs hidden">
+                                {{$order->getBuyer->name}}
+                            </td>
+                            {{--@endif--}}
+                            <td class="px-4 py-3 text-sm">
+                                {{\Carbon\Carbon::parse($order->created_at)->toDayDateTimeString()}}
+                            </td>
+{{--                            <td class="px-4 py-3">--}}
+{{--                                <div data-id="{{$order->id}}" class="flex items-center space-x-4 text-sm">--}}
+{{--                                    <button--}}
+{{--                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                        aria-label="Edit">--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />--}}
+{{--                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />--}}
+{{--                                        </svg>--}}
+{{--                                    </button>--}}
+{{--                                    --}}{{--<button--}}
+{{--                                        class="on_sale {{  $Item->is_on_sale ? "hidden" : "flex" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                        aria-label="Delete">--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />--}}
+{{--                                        </svg>--}}
+{{--                                    </button>--}}
+{{--                                    <button--}}
+{{--                                        class="not_sale {{  $Item->is_on_sale ? "flex" : "hidden" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                        aria-label="Delete">--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />--}}
+{{--                                        </svg>--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </td>--}}
+                        </tr>
                     @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{{--            //////////////////////////////////////////////////////////////////////--}}
+            <div class="w-full overflow-hidden rounded-lg shadow-xs mt-10">
+                <h2 class="ml-3 text-gray-700 dark:text-gray-400 text-xl font-bold">Selling</h2>
+                <div class="w-full overflow-x-auto">
+                    <table id="orderShowTable2" class="w-full whitespace-no-wrap">
+                        <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            {{--                        <th class="px-4 py-3">User</th>--}}
+                            <th class="px-4 py-3">Item</th>
+                            <th class="px-4 py-3">Quantity</th>
+                            <th class="px-4 py-3">Price</th>
+        {{--                        <th class="px-4 py-3">Seller</th>--}}
+                            <th class="px-4 py-3">Buyer</th>
+                            <th class="px-4 py-3">Date</th>
+{{--                            <th class="px-4 py-3">Actions</th>--}}
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        @foreach($selling as $order)
+                            <tr class="text-gray-700 dark:text-gray-100 bg-green-50 dark:bg-green-900">
+                                <td class="px-4 py-3 ">
+                                    <div class="flex items-center text-sm">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full" src="https://ui-avatars.com/api/?name={{urlencode($order->kind->name)}}&color=7F9CF5&background=EBF4FF" alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">{{$order->kind->name}}</p>
+                                            {{--                                        <p class="text-xs text-gray-600 dark:text-gray-400">--}}
+                                            {{--                                            {{$confirmItem->user->phone_number}}--}}
+                                            {{--                                        </p>--}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{$order->quantity}}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    ₺ {{$order->price}}
+                                </td>
+                                <td class="px-4 py-3 text-xs hidden">
+
+                                    {{$order->getSeller->name}}
+
+                                </td>
+                                {{--@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')--}}
+                                <td class="px-4 py-3 text-xs">
+                                    {{$order->getBuyer->name}}
+                                </td>
+                                {{--@endif--}}
+                                <td class="px-4 py-3 text-sm">
+                                    {{\Carbon\Carbon::parse($order->created_at)->toDayDateTimeString()}}
+                                </td>
+{{--                                <td class="px-4 py-3">--}}
+{{--                                    <div data-id="{{$order->id}}" class="flex items-center space-x-4 text-sm">--}}
+{{--                                        <button--}}
+{{--                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                            aria-label="Edit">--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />--}}
+{{--                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />--}}
+{{--                                            </svg>--}}
+{{--                                        </button>--}}
+{{--                                        --}}{{--<button--}}
+{{--                                            class="on_sale {{  $Item->is_on_sale ? "hidden" : "flex" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                            aria-label="Delete">--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />--}}
+{{--                                            </svg>--}}
+{{--                                        </button>--}}
+{{--                                        <button--}}
+{{--                                            class="not_sale {{  $Item->is_on_sale ? "flex" : "hidden" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                                            aria-label="Delete">--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />--}}
+{{--                                            </svg>--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+            {{--<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                <span class="flex items-center col-span-3">
+                    Showing 21-30 of 100
+                </span>
+                <span class="col-span-2"></span>
                 <!-- Pagination -->
-                <span class="flex col-span-2 mt-2 sm:mt-auto sm:justify-start">
+                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                     <nav aria-label="Table navigation">
                         <ul class="inline-flex items-center">
                             <li>
-                                <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous"
-                                        @if ($data->onFirstPage())
-                                        disabled
-                                        @else
-                                        @click="window.location='{{ $data->previousPageUrl() }}'"
-                        @endif
-                                >
+                                <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
                                     <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
                                         <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
                                     </svg>
                                 </button>
                             </li>
-
-                <li>
-                    <button
-                        class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                        aria-label="Next"
-
-                        @if (!$data->hasMorePages())
-                        disabled
-                        @else
-                        @click="window.location='{{ $data->nextPageUrl() }}'"
-                        @endif
-                    >
-                        <svg class="w-4 h-4 fill-current" aria-hidden="true"
-                             viewBox="0 0 20 20">
-                            <path
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd" fill-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    1
+                                </button>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    2
+                                </button>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    3
+                                </button>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    4
+                                </button>
+                            </li>
+                            <li>
+                                <span class="px-3 py-1">...</span>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    8
+                                </button>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                    9
+                                </button>
+                            </li>
+                            <li>
+                                <button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                                    <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                                        <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </li>
                         </ul>
                     </nav>
                 </span>
-                <span class="flex items-center col-span-7 sm:justify-end">
-                    {!! __('Showing') !!}
-                    {{ $data->firstItem() }}-{{ $data->lastItem() }}
-                    {!! __('of') !!}
-                    {{ $data->total() }}
-                </span>
             </div>
+        --}}
         </div>
 
 

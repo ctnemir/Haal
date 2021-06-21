@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Models\Kind;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ConfirmItemController;
 use App\Http\Controllers\ConfirmMoneyController;
+use App\Http\Controllers\OrderRequestController;
 use App\Http\Controllers\ChartController;
 
 /*
@@ -32,25 +34,15 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::get('test', function (){
-        $orders= Order::where('buyer','=',Auth::user()->id)
-            ->where('quantity','>',0)
-            ->get()
-            ->sortBy('id');
-
-        $k = array();
-        foreach ($orders as $order){
-            array_push($k,$order->kind->name);
-        }
-
-        $q = array();
-        foreach ($orders->groupBy('kind_id') as $order){
-            array_push($q,strval($order->sum('quantity')));
-        }
-        return array_values(array_unique($k));
+//    Route::get('/test', [OrderController::class , 'export']);
+    Route::any('/test', function (Request $request){
+        return $request;
     });
     Route::get('itemToggle',[ItemController::class,'toggle'])->name('itemToggle');
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', function (){
+        $currency = collect(json_decode(file_get_contents('https://api.genelpara.com/embed/para-birimleri.json'), true));
+        return view('dashboard')->with('data' , $currency);
+    })->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
     Route::view('cards', 'cards')->name('cards');
     Route::view('charts', 'charts')->name('charts');
@@ -61,9 +53,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('order',OrderController::class);
     Route::get('/calc' , [OrderController::class , 'calc'])->name('calc');
+    Route::any('/export' , [OrderController::class , 'export'])->name('export');
     Route::resource('item',ItemController::class);
     Route::resource('confirmItem',ConfirmItemController::class);
     Route::resource('confirmMoney',ConfirmMoneyController::class);
+    Route::resource('orderRequest',OrderRequestController::class);
     Route::view('dashchart','chartdash')->name('dashchart');
 
 });

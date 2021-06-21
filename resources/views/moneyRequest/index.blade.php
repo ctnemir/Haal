@@ -63,7 +63,7 @@
                             </td>
 
                             <td class="px-4 py-3 text-sm">
-                                ₺ {{$confirmMoney->amount}}
+                                {{$confirmMoney->amount}} <span class="{!! $confirmMoney->currency != "TL" ? "font-bold text-indigo-700":"" !!}">{{$confirmMoney->currency}}</span>
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{\Carbon\Carbon::createFromDate($confirmMoney->create_at)->toFormattedDateString()}}

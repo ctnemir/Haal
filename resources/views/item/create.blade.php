@@ -1,6 +1,5 @@
 <x-app-layout title="Item Request">
     <div class="container grid px-6 mx-auto">
-
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <form method="post" action="{{route('confirmItem.store')}}">
                 @csrf

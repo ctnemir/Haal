@@ -104,20 +104,41 @@
                         </div>
                         <div data-id="{{$kind->first()->kind_id}}" class="priceCalc hidden p-4 w-full flex-col items-start bg-white rounded-lg shadow-xs dark:bg-gray-800">
                             <label id="new_kind_label" class="mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Quantity</span>
-                                <div class="flex flex-row mb-2">
-                                    <input type="number" step="0.01"
-                                           class="block p-0 priceCalcInput w-9/12 m-1 text-sm dark:border-gray-600 dark:bg-gray-700
-                                    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
-                                    dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name="quantity" autofocus/>
 
-                                    <button class="orderCreate px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
-                                    </button>
+                                <div  data-id="{{$kind->first()->kind_id}}" class="flex flex-col">
+                                    <span class="text-gray-700 dark:text-gray-400">Quantity</span>
+                                    {{--<div class="flex flex-row mb-2">
+                                        <input type="number" step="0.01"
+                                               class="block p-0 priceCalcInput w-9/12 m-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                                    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                                    dark:text-gray-300 dark:focus:shadow-outline-gray form-input" autofocus/>
+
+                                        <button class=" px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                            </svg>
+                                        </button>
+                                    </div>--}}
+                                    <div class="relative text-gray-500 focus-within:text-purple-600">
+                                        <input name="quantity" class="priceCalcInput block w-full pr-20 text-sm text-black
+                                        dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400
+                                        focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                        type="number"/>
+                                        <button class="orderCreate absolute inset-y-0 right-0 px-2 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <span class="text-gray-700 dark:text-gray-400">Price</span>
+                                    <div class="flex flex-row mb-2">
+                                        <input type="number" step="0.01"
+                                               class="block form-input bg-purple-100 p-0 priceInput w-full m-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                                    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                                    dark:text-gray-300 dark:focus:shadow-outline-gray " name="quantity" placeholder="Optional" autofocus/>
+                                    </div>
                                 </div>
-                                <span class="calcResult py-2 px-4 rounded-full text-gray-700 dark:text-gray-100 bg-indigo-200 dark:bg-indigo-800">...</span>
+                                <span class="calcResult ml-1 py-2 px-4 rounded text-gray-700 dark:text-gray-100 bg-indigo-200 dark:bg-indigo-800">...</span>
 
                             </label>
                         </div>

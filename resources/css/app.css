@@ -1,3 +1,15 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.alertify .ajs-commands {
+    position: absolute;
+    right: 1rem !important;
+    left: unset !important;
+    top: 2rem;
+    margin: -14px 0 0 24px;
+    z-index: 2;
+}
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+    color: #7e3af2 !important;
+}

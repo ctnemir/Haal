@@ -31,11 +31,25 @@ class ConfirmMoneyController extends Controller
      */
     public function create(Request $request)
     {
+        $confirm = ConfirmMoney::find($request->id);
+        $user = User::find($confirm->user->id);
+
+        if ($confirm->currency != "TL"){
+            $JSON = json_decode(file_get_contents('https://api.genelpara.com/embed/para-birimleri.json'), true);
+            $currencies = collect($JSON);
+            $currencies->each(function ($item,$key) use ($confirm) {
+                if ($key == $confirm->currency)
+                {
+                    $confirm->amount *= $item["satis"];
+                    return false;
+                }
+            });
+        }
+
         if(!$request->is_request){
             abort(400);
         }
-        $confirm = ConfirmMoney::find($request->id);
-        $user = User::find($confirm->user->id);
+
         $user->money += $confirm->amount;
         $user->save();
         $confirm->confirm_at = now();
@@ -58,7 +72,10 @@ class ConfirmMoneyController extends Controller
         }
         $confirmMoney = new ConfirmMoney;
         $confirmMoney->user_id = $request->user_id;
-        $confirmMoney->amount = $request->data;
+        $confirmMoney->amount = $request->amount;
+        if ($request->currency != null){
+            $confirmMoney->currency = $request->currency;
+        }
         $confirmMoney->save();
         return response()->json("success", 200);
     }

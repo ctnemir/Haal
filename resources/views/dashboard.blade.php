@@ -130,16 +130,25 @@
 
             </div>
         @endcan
-        <div class="flex flex-col items-center w-72 mt-4 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <div class="flex flex-col items-center w-96 mb-72 mt-4 p-7 bg-white rounded-lg shadow-xs dark:bg-gray-800">
             <div class="p-3 text-green-800 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8  w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10  w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
+
             <div>
                 <label class="flex flex-col mt-2 items-center text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Add Money</span>
-                    <input id="addMoneyInput" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                    <span class="text-gray-700 text-lg font-bold my-5 dark:text-gray-400">Add Money</span>
+                    <div class="relative text-gray-500 focus-within:text-purple-600 mt-2">
+                        <input id="addMoneyInput" class="block w-full pr-20 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" placeholder="Amount"/>
+                        <select id="addMoneySelect" class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 bg-gray-300 border border-transparent rounded-r-md active:bg-gray-400  focus:outline-none focus:shadow-outline-indigo">
+                            <option value="">Türk Lirası</option>
+                            @foreach($data as $key=> $currency)
+                            <option value="{{$key}}">{{$currency["isim"]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </label>
             </div>
             <button id="addMoneyButton" type="button" class=" w-6/12 px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-green-700 hover:bg-green-800 focus:outline-none focus:shadow-outline-green">

@@ -4,10 +4,17 @@ require('./bootstrap');
 
 // Jquery kütüphanesinin tanımlanması
 import $ from "jquery"
+import "tablesorter"
+
 
 
 
 $(document).ready(function (){
+
+    let calced = 0;
+
+    $("table").tablesorter();
+
     //item isteğini onaylayan işlem
     $(".accept").click(function (){
         let url = "/item/create";
@@ -58,8 +65,10 @@ $(document).ready(function (){
     $("#addMoneyButton").click(function (){
 
         let amount = $('#addMoneyInput').val();
+        let currency = $('#addMoneySelect').val();
         let data = {
-            data : amount,
+            amount : amount,
+            currency: currency,
             _token : token,
             user_id : user_id,
             is_request: true
@@ -112,9 +121,10 @@ $(document).ready(function (){
     });
     //shop sayfasında ürün miktarı değiştikçe hesaplayıp çıktısını gösterme işlemi
     $(".priceCalcInput").keyup(function (){
+
         let url = "/calc";
         let thisElement = $(this);
-        let dataId = $(this).parent().parent().parent().attr('data-id');
+        let dataId = $(this).parent().parent().parent().parent().attr('data-id');
         let data = {
             _token : token,
             kind_id : dataId,
@@ -125,9 +135,11 @@ $(document).ready(function (){
             return 0;
             thisElement.parent().parent().find('.calcResult').html("...");
         }
+
         $.get(url, data, function(response){
             console.log(response);
-            thisElement.parent().parent().find('.calcResult').html("₺ "+response);
+            calced = response;
+            thisElement.parent().parent().parent().find('.calcResult').html("₺ "+response);
         }, 'json');
     });
     //shop sayfasında ürünün işlmelerini içeren kısmı açıp kapatma işlemi
@@ -139,17 +151,24 @@ $(document).ready(function (){
 
         let thisElement = $(this);
         let quantity = thisElement.parent().find('.priceCalcInput').val();
+        let price = thisElement.parent().parent().parent().find('.priceInput').val();
+        //thisElement.parent().parent().parent().parent().find('.calcResult').text();
+        let message = "₺"+calced + " + ₺" + calced*0.01;
 
-        alertify.confirm('Order Confirm', thisElement.parent().parent().find('.calcResult').text(), function (){
+
+        alertify.confirm('Order Confirm', message, function () {
             alertify.warning('Working');
             let url = "/order";
-            let dataId = thisElement.parent().parent().parent().attr('data-id');
+            let dataId = thisElement.parent().parent().parent().parent().attr('data-id');
             let data = {
-                _token : token,
-                kind_id : dataId,
-                quantity: thisElement.parent().find('.priceCalcInput').val(),
-                is_request : true
+                _token: token,
+                kind_id: dataId,
+                quantity: quantity,
+                price : price,
+                is_request: true
             };
+
+
 
             $.post(url, data, function(response){
                 console.log(response);
@@ -165,9 +184,11 @@ $(document).ready(function (){
                 else if (response[0] == 'not_enough'){
                     alertify.notify('Insufficient balance','error',3);
                 }
+                else if (response[0] == "orderRecord created"){
+                    alertify.notify('Order Request Created', 'info', 3);
+                }
             }, 'json');
         } , function (){alertify.error('Denied')});
-
 
     });
 

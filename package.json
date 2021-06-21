@@ -26,6 +26,7 @@
         "alpinejs": "^2.8.1",
         "chartjs": "^0.3.24",
         "jquery": "^3.6.0",
+        "tablesorter": "^2.31.3",
         "turbolinks": "^5.2.0"
     }
 }

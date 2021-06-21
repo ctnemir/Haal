@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Kind;
 use App\Models\Order;
+use App\Models\OrderRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\OrderExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -19,7 +22,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('order.index');
+        $data = Order::all()->groupBy('order_reference');
+        return view('order.index')->with('data',$data);
         $orders = Order::all()->groupBy('order_reference');
         foreach ($orders as $order){
             printf($order->first()->kind->name);
@@ -44,46 +48,26 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //tek seferde yapılan emirlerin referansları aynı olacak
-        $ref = rand();
+
 
         $order_datas = Order::calc($request);
-
-        if(Auth::user()->money < $order_datas->last()['total_price']){
-            $response[0] = "not_enough";
-            return response()->json($response, 202);
+        //istenen ücret uygunsa satın alma işlemi gerçekleşsin
+        if ($request->price > $order_datas->last()["total_price"]){
+            return response()->json(Order::buy($request), 200);
         }
-        foreach ($order_datas as $order_data){
-            $order = new Order;
-            $order->order_reference = $ref;
-            $order->buyer = Auth::user()->id;
-            $order->seller = $order_data['user_id'];
-            $order->price = $order_data['this_price'];
-            $order->quantity = $order_data['used_quantity'];
-            $order->kind_id = $order_data['kind_id'];
-            $order->save();
+        else{
+            $orderRequest = new OrderRequest;
+            $orderRequest->user_id = Auth::user()->id;
+            $orderRequest->kind_id = $request->kind_id;
+            $orderRequest->quantity = $request->quantity;
+            $orderRequest->price = $request->price;
+            $orderRequest->save();
 
-            if($order_data['quantity'] == $order_data['used_quantity']){
-                Item::destroy($order_data['id']);
-                $response[1] = 'out';
-                $response[2] = Item::all()->count();
-            }
-            elseif ($order_data['quantity'] > $order_data['used_quantity']){
-                $item = Item::find($order_data['id']);
-                $item->quantity -= $order_data['used_quantity'];
-                $item->save();
-            }
+            $response[0] =  "orderRecord created";
+            return response()->json($response , 200);
         }
 
-        $seller = User::find($order->seller);
-        $seller->money += $order_datas->last()['total_price'];
-        $seller->save();
 
-        $buyer = User::find(Auth::user()->id);
-        $buyer->money -= $order_datas->last()['total_price'];
-        $buyer->save();
-        $response[0] = "success";
-        return response()->json($response, 200);
 
     }
 
@@ -95,7 +79,14 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = Auth::id();
+        $data1 = Order::where('seller',$id)->get();
+        $data2 = Order::where('buyer',$id)->get();
+
+        //return gettype($data->first()->toArray());
+        return view('order.show')
+            ->with('selling',$data1)
+            ->with('buying',$data2);
     }
 
     /**
@@ -133,8 +124,21 @@ class OrderController extends Controller
     }
 
     public function calc(Request $request){
+        //return $request;
         //$order = new Order;
         //return Order::calc($request);
-        return Order::calc($request)->last()['total_price'];
+        return Order::calc($request)->last()["total_price"];
+    }
+    public function export(Request $request){
+//        return $request;
+        if ($request->start != null || $request->end != null){
+            $request = $request->validate([
+                'start' => 'required',
+                'end' => 'required',
+                'kind' => '',
+                'type' => ''
+            ]);
+        }
+        return Excel::download(new OrderExport($request), 'order.xlsx');
     }
 }

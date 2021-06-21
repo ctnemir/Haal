@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ConfirmItem;
 use App\Models\Item;
 use App\Models\Kind;
+use App\Models\OrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,11 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Item::find($id);
+        if (isset($data)) {
+            return view('item.update')->with('data', $data);
+        }
+        return back();
     }
 
     /**
@@ -99,7 +104,12 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = Item::find($id);
+        $item->quantity = $request->quantity;
+        $item->price = $request->price;
+        $item->save();
+        OrderRequest::check();
+        return redirect(route('item.index'));
     }
 
     /**

@@ -7,6 +7,17 @@
             <h2 class="text-2xl font-semibold inline-block">
                 All Orders
             </h2>
+
+        </div>
+        <div class="mr-16">
+            <form action="">
+                <button class="px-3 py-1 mt-8 text-sm font-medium leading-5 text-purple-600 transition-colors
+                duration-150 bg-white border border-transparent rounded-md active:text-white hover:text-white active:bg-purple-600
+                hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        type="submit">
+                    Export
+                </button>
+            </form>
         </div>
     </div>
     <div class="container grid px-6 mx-auto">
@@ -95,11 +106,11 @@
                             <th class="px-4 py-3">Buyer</th>
                         @endif
                         <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Actions</th>
+{{--                        <th class="px-4 py-3">Actions</th>--}}
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach(\App\Models\Order::all()->groupBy('order_reference') as $order)
+                    @foreach($data as $order)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
@@ -127,41 +138,41 @@
                                 {{$ord->first()->getSeller->name}}
                                 @endforeach
                             </td>
-                            @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                            {{--@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')--}}
                                 <td class="px-4 py-3 text-xs">
-                                    {{$ord->first()->getBuyer->name}}
+                                    {{$order->first()->getBuyer->name}}
                                 </td>
-                            @endif
+                            {{--@endif--}}
                             <td class="px-4 py-3 text-sm">
                                 {{\Carbon\Carbon::parse($order->first()->created_at)->toFormattedDateString()}}
                 {{--{{$order->first()->create_at->toDateString()}}--}}
             </td>
-            <td class="px-4 py-3">
-                <div data-id="{{$order->first()->id}}" class="flex items-center space-x-4 text-sm">
-                    <button
-                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                        aria-label="Edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                    </button>
-                    {{--<button
-                        class="on_sale {{  $Item->is_on_sale ? "hidden" : "flex" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                        aria-label="Delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </button>
-                    <button
-                        class="not_sale {{  $Item->is_on_sale ? "flex" : "hidden" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                        aria-label="Delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>--}}
-                                </div>
-                            </td>
+{{--            <td class="px-4 py-3">--}}
+{{--                <div data-id="{{$order->first()->id}}" class="flex items-center space-x-4 text-sm">--}}
+{{--                    <button--}}
+{{--                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                        aria-label="Edit">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />--}}
+{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />--}}
+{{--                        </svg>--}}
+{{--                    </button>--}}
+{{--                    --}}{{--<button--}}
+{{--                        class="on_sale {{  $Item->is_on_sale ? "hidden" : "flex" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                        aria-label="Delete">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />--}}
+{{--                        </svg>--}}
+{{--                    </button>--}}
+{{--                    <button--}}
+{{--                        class="not_sale {{  $Item->is_on_sale ? "flex" : "hidden" }} items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--}}
+{{--                        aria-label="Delete">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />--}}
+{{--                        </svg>--}}
+{{--                    </button>--}}
+{{--                                </div>--}}
+{{--                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ConfirmItem;
-//use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Order;
+use phpDocumentor\Reflection\Types\This;
 
-class ConfirmItemController extends Controller
+class OrderRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +15,12 @@ class ConfirmItemController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('admin', Auth::user())) {
-            return view('itemRequest.index');
-        }
-        abort(403);
+        $request = (object)[
+            'kind_id'   => 1,
+            'quantity'  =>15
+        ];
+        //return $request->kind_id;
+        return Order::calc($request);
     }
 
     /**
@@ -30,7 +30,7 @@ class ConfirmItemController extends Controller
      */
     public function create()
     {
-        return view('itemRequest.create');
+        //
     }
 
     /**
@@ -41,22 +41,7 @@ class ConfirmItemController extends Controller
      */
     public function store(Request $request)
     {
-        $confirmItem = new ConfirmItem;
-        $confirmItem->user_id = Auth::user()->id;
-        if ($request->new_kind != null){
-            $confirmItem->is_new_kind = true;
-            $confirmItem->new_kind = $request->new_kind;
-            $confirmItem->kind_id = null;
-        }
-        else{
-            $confirmItem->is_new_kind = false;
-            $confirmItem->kind_id = $request->kind_id;
-        }
-        $confirmItem->quantity = $request->quantity;
-        $confirmItem->price = $request->price;
-        $confirmItem->save();
-
-        return redirect('/dashboard');
+        //
     }
 
     /**
@@ -103,4 +88,6 @@ class ConfirmItemController extends Controller
     {
         //
     }
+
+
 }
